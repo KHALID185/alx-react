@@ -5,6 +5,6 @@ import App from "./App/App";
 ReactDOM.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  vi</React.StrictMode>,
   document.getElementById("root")
 );
