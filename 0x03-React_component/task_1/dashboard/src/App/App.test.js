@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import App from './App';
 
 describe('Test App.js', () => {
@@ -10,7 +10,7 @@ describe('Test App.js', () => {
   });
 
   it('Renders App without crashing', () => {
-    expect(wrapper.exists());
+    expect(wrapper.exists()).toBe(true);
   });
 
   it('App component contains Notifications component', () => {
@@ -45,7 +45,24 @@ describe("Testing <App isLoggedIn={true} />", () => {
     expect(wrapper.find('Login')).toHaveLength(0);
   });
 
-  it(" the CourseList component is included", () => {
-    expect(wrapper.find('CourseList').exists());
+  it("the CourseList component is included", () => {
+    expect(wrapper.find('CourseList').exists()).toBe(true);
+  });
+});
+
+describe("Testing <App logOut={function} />", () => {
+  it("verify that when the keys control and h are pressed the logOut function is called and the alert function is called with the string Logging you out", () => {
+    const logOut = jest.fn();
+    const alert = jest.spyOn(window, 'alert');
+    const wrapper = mount(<App logOut={logOut} />);
+    const event = new KeyboardEvent('keydown', { key: 'h', ctrlKey: true });
+
+    document.dispatchEvent(event);
+
+    expect(alert).toHaveBeenCalledWith('Logging you out');
+    expect(logOut).toHaveBeenCalled();
+
+    alert.mockRestore();
+    wrapper.unmount();
   });
 });
